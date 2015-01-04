@@ -32,3 +32,19 @@ Users controller
 User model
 
 @ mu je instance variabla i moze se pristupiti iz view-a
+
+rake db:migrate - pokrece migraciju
+rake db:rollback - vraca migraciju (ako je reversible (ako je kreiranje tabele u pitanju onda ce raditi drop), a ako nije radice po up i down metodama)
+rails console --sandbox - Ubacuje nas u konzolu, sve promene koje radimo su temp a ne perma
+
+
+
+facts:
+setup metoda se izvrasva pre svakog testa, to je u sustini background u capybari
+
+
+validations:
+unique(prosle)
+lenght(min max)
+presence(da li je required)
+format(za regex)
