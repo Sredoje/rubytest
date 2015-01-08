@@ -33,18 +33,41 @@ User model
 
 @ mu je instance variabla i moze se pristupiti iz view-a
 
-rake db:migrate - pokrece migraciju
-rake db:rollback - vraca migraciju (ako je reversible (ako je kreiranje tabele u pitanju onda ce raditi drop), a ako nije radice po up i down metodama)
+
+
+
 rails console --sandbox - Ubacuje nas u konzolu, sve promene koje radimo su temp a ne perma
 
+rails generate migration ime_migracije
 
 
+
+Postoje stanja za modele kao sto su:
+before_save,after_save
 facts:
 setup metoda se izvrasva pre svakog testa, to je u sustini background u capybari
 
+Migracije:
+rake db:migrate - pokrece migraciju
+rake db:rollback - vraca migraciju (ako je reversible (ako je kreiranje tabele u pitanju onda ce raditi drop), a ako nije radice po up i down metodama)
+
+Dodavanje indexa na tabelu:
+prvo napravimo migraciju pa onda
+add_index :users, :email, unique: true gde je :users tabela, a :email index koji moze biti unique al ne mora
+
+Dodavanje password autentifikacije:
+u model dodajemo has_secure_password
+da bi to radilo moramo da imamo password_digest(string) polje u bazi koje je kao md5(neka enkripcija koja je ireverceble)
+da bi radila enkripcija mora da se isntalira gem 'bcrypt', '3.1.7'
+
+
+Kad pokreces migracije one se ranuju od prve napravljene do poslednje i tako redom, ako pomeras server na drugu bazu pametnije je da odradis
+load schema nego da ranujes sve migracije od prve do poslednje. samo exportujes shemu i loadujes je na drugom mestu
 
 validations:
 unique(prosle)
 lenght(min max)
 presence(da li je required)
 format(za regex)
+
+
