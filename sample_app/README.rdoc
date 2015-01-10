@@ -37,7 +37,7 @@ User model
 
 
 rails console --sandbox - Ubacuje nas u konzolu, sve promene koje radimo su temp a ne perma
-
+rails console test da bi pokrenuli konzolu u test env, Rails.env.test? => true vraca u ovom slucaju
 rails generate migration ime_migracije
 
 
@@ -59,6 +59,8 @@ Dodavanje password autentifikacije:
 u model dodajemo has_secure_password
 da bi to radilo moramo da imamo password_digest(string) polje u bazi koje je kao md5(neka enkripcija koja je ireverceble)
 da bi radila enkripcija mora da se isntalira gem 'bcrypt', '3.1.7'
+ovo ce nam omoguciti atribute :password i :password_confirm koji moraju biti isti da bi prosla validacija
+sa sredoje.authenticate("Neki pass"), ova metoda nam vraca true samo ako je :password i :password_confirm isti i to njohov hash ne kao string
 
 
 Kad pokreces migracije one se ranuju od prve napravljene do poslednje i tako redom, ako pomeras server na drugu bazu pametnije je da odradis
@@ -70,4 +72,13 @@ lenght(min max)
 presence(da li je required)
 format(za regex)
 
+Za debuger mozemo da koristimo ove dve stvarcice:
+<%= debug(params) if Rails.env.development? %> ovo ubacimo u neki erb da bi printali parametre i metodu
+ili byebug debugger, samo stavimo rec debugger gde hocemo da stane kod i onda uvatimo u konzoli i cackamo i sa ctrl/cmd + d izlazimo iz debug-a
 
+
+<% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+<% end %>
+ovo radi tako sto flash u nasoj aplikaciji izgleda ovako flash[:success] => "Radi" sto mu dodje isto kao flash["success"] 
+tako da je message_type = "success" | "danger" a message je "Radi" | "Jok"
